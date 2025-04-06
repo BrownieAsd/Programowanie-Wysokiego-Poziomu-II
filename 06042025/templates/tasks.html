@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Tasks</h1>
+    <ol>
+        {% for task in tasks %}
+            <li {% if not task.completed %} class="non" {% else %} class="comp" {% endif %}>
+            {{ task.title }}
+            <form action="/tasks/{{ task.id }}/delete" method="post" style="display:inline;">
+                <input type="hidden" name="task_id" value="{{ task.id }}">
+                <button type="submit">delete</button>
+            </form>
+            <form action="/tasks/{{ task.id }}/completed" method="post" style="display:inline;">
+                <input type="hidden" name="task_id" value="{{ task.id }}">
+                <button type="submit">finished</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ol>
+    <h2>Add task</h2>
+    <form action="/tasks" method="post">
+        <label for="title">Task Title:</label>
+        <input type="text" id="title" name="title" required>
+        <button type="submit">Add Task</button>
+    </form>
+</body>
+</html>
