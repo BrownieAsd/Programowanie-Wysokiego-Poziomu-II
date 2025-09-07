@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Admin Dashboard</h2>
+
+  <h4>Active Users</h4>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.username }}</td>
+          <td>
+            {% if user.username != "admin" %}
+              <form action="{{ url_for('delete_user', user_id=user.id) }}" method="POST" style="display:inline;">
+                <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+              </form>
+              <form action="{{ url_for('edit_user', user_id=user.id) }}" method="POST" style="display:inline;">
+                <input type="text" name="new_username" placeholder="New username" required>
+                <button class="btn btn-sm btn-warning" type="submit">Change Name</button>
+              </form>
+            {% else %}
+              <span class="text-muted">Admin (locked)</span>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <hr>
+
+  <h4 class="mt-4">Add New Transfer</h4>
+  <form action="{{ url_for('add_transfer') }}" method="POST" class="row g-3">
+    <div class="col-md-4">
+      <input type="text" class="form-control" name="player" placeholder="Player Name" required>
+    </div>
+    <div class="col-md-4">
+      <input type="text" class="form-control" name="from_team" placeholder="From Team">
+    </div>
+    <div class="col-md-4">
+      <input type="text" class="form-control" name="to_team" placeholder="To Team">
+    </div>
+    <div class="col-md-3">
+      <input type="date" class="form-control" name="date">
+    </div>
+    <div class="col-md-3">
+      <input type="text" class="form-control" name="fee" placeholder="Fee">
+    </div>
+    <div class="col-md-6">
+      <input type="text" class="form-control" name="image" placeholder="Player Image URL">
+    </div>
+    <div class="col-md-6">
+      <input type="text" class="form-control" name="from_team_logo" placeholder="From Team Logo URL">
+    </div>
+    <div class="col-md-6">
+      <input type="text" class="form-control" name="to_team_logo" placeholder="To Team Logo URL">
+    </div>
+    <div class="col-12">
+      <button type="submit" class="btn btn-success">Add Transfer</button>
+    </div>
+  </form>
+
+<h4 class="mt-4">Add New League</h4>
+<form action="{{ url_for('add_league') }}" method="POST" class="row g-3">
+  <div class="col-md-3">
+    <input type="number" class="form-control" name="league_id" placeholder="League ID" required>
+  </div>
+  <div class="col-md-4">
+    <input type="text" class="form-control" name="name" placeholder="League Name" required>
+  </div>
+  <div class="col-md-3">
+    <select class="form-control" name="standings">
+      <option value="true">Has Standings</option>
+      <option value="false">No Standings</option>
+    </select>
+  </div>
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Add League</button>
+  </div>
+</form>
+</div>
+{% endblock %}

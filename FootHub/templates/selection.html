@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}All Leagues{% endblock %}
+
+{% block head %}
+<style>
+  .league-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 12px;
+  }
+  .league-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  .league-logo {
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 10px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center mb-4 fw-bold">Browse Leagues</h1>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  {% for league in leagues %}
+  <div class="col">
+    <div class="card league-card h-100 shadow-sm text-center p-3">
+      <img src="{{ league.logo }}" class="league-logo" alt="{{ league.name }}">
+      <h5 class="card-title">{{ league.name }}</h5>
+
+      {% if league.standings %}
+        <a href="{{ url_for('standings', league_id=league.id) }}" class="btn btn-outline-dark mt-2">Standings</a>
+      {% else %}
+        <a href="/matches" class="btn btn-dark mt-2">View</a>
+      {% endif %}
+
+      {% if session.get("user") and league.standings and league.id not in user_fav_ids%}
+      <form method="POST" action="{{ url_for('add_favourite') }}" class="mt-2">
+        <input type="hidden" name="fav_type" value="league">
+        <input type="hidden" name="fav_name" value="{{ league.name }}">
+        <input type="hidden" name="fav_api_id" value="{{ league.id }}">
+        <button type="submit" class="btn btn-sm btn-dark">+ Favourite</button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

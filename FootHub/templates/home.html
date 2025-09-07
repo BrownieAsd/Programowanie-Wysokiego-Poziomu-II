@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}All Leagues{% endblock %}
+
+{% block head %}
+<style>
+  .league-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 12px;
+  }
+  .league-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  .league-logo {
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 10px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center mb-4 fw-bold">Browse Leagues</h1>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+  <div class="col">
+    <div class="card league-card h-100 shadow-sm text-center p-3">
+        <img src="https://t4.ftcdn.net/jpg/05/09/96/71/360_F_509967154_SxP5oGfK7imqJXezihVIbWq9k0i21gwE.jpg" class="league-logo" alt="Live games">
+      <h5 class="card-title">Live Matches</h5>
+      <a href="/matches" class="btn btn-dark mt-2">View</a>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card league-card h-100 shadow-sm text-center p-3">
+      <img src="https://media.api-sports.io/football/leagues/39.png" class="league-logo" alt="Premier League">
+      <h5 class="card-title">Premier League</h5>
+      <a href="/standings/39" class="btn btn-outline-dark mt-2">Standings</a>
+    </div>
+  </div>
+
+
+  <div class="col">
+    <div class="card league-card h-100 shadow-sm text-center p-3">
+      <img src="https://media.api-sports.io/football/leagues/78.png" class="league-logo" alt="Bundesliga">
+      <h5 class="card-title">Bundesliga</h5>
+      <a href="/standings/78" class="btn btn-outline-dark mt-2">Standings</a>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card league-card h-100 shadow-sm text-center p-3">
+      <img src="https://media.api-sports.io/football/leagues/135.png" class="league-logo" alt="Serie A">
+      <h5 class="card-title">Serie A</h5>
+      <a href="/standings/135" class="btn btn-outline-dark mt-2">Standings</a>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card league-card h-100 shadow-sm text-center p-3">
+      <img src="https://media.api-sports.io/football/leagues/140.png" class="league-logo" alt="La Liga">
+      <h5 class="card-title">La Liga</h5>
+      <a href="/standings/140" class="btn btn-outline-dark mt-2">Standings</a>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card league-card h-100 shadow-sm text-center p-3">
+      <img src="https://media.api-sports.io/football/leagues/2.png" class="league-logo" alt="Champions League">
+      <h5 class="card-title">Champions League</h5>
+      <a href="/standings/2" class="btn btn-outline-dark mt-2">Standings</a>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card league-card h-100 shadow-sm text-center p-3">
+      <img src="https://media.api-sports.io/football/leagues/3.png" class="league-logo" alt="Europa League">
+      <h5 class="card-title">Europa League</h5>
+      <a href="/standings/3" class="btn btn-outline-dark mt-2">Standings</a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

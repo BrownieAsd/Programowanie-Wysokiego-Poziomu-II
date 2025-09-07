@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}{{ league_name }} Table{% endblock %}
+
+{% block head %}
+<style>
+    table {
+        width: 80%;
+        border-collapse: collapse;
+        margin: 20px auto;
+    }
+    th, td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #ccc;
+    }
+    th {
+        background-color: #333;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1 style="text-align:center;">{{ league_name }} Table</h1>
+<table>
+{% if league_id > 4 %}
+    <thead>
+        <tr>
+            <th>Pos</th>
+            <th>Team</th>
+            <th>Played</th>
+            <th>W</th>
+            <th>D</th>
+            <th>L</th>
+            <th>GF</th>
+            <th>GA</th>
+            <th>GD</th>
+            <th>Points</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for team in standings %}
+        <tr>
+            <td>{{ team.rank }}</td>
+            <td style="display: flex; align-items: center; gap: 10px;">
+                <img src="{{ team.team.logo }}" alt="{{ team.team.name }} logo" width="25" height="25">
+                {{ team.team.name }}
+            </td>
+            <td>{{ team.all.played }}</td>
+            <td>{{ team.all.win }}</td>
+            <td>{{ team.all.draw }}</td>
+            <td>{{ team.all.lose }}</td>
+            <td>{{ team.all.goals.for }}</td>
+            <td>{{ team.all.goals.against }}</td>
+            <td>{{ team.goalsDiff }}</td>
+            <td>{{ team.points }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+{% else %}
+    {% for group in standings %}
+    <thead>
+        <tr>
+            <th colspan="10" style="background-color: #444; color: white;">
+                {{ group.0.group }}
+            </th>
+        </tr>
+        <tr>
+            <th>Pos</th>
+            <th>Team</th>
+            <th>Played</th>
+            <th>W</th>
+            <th>D</th>
+            <th>L</th>
+            <th>GF</th>
+            <th>GA</th>
+            <th>GD</th>
+            <th>Points</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for team in group %}
+        <tr>
+            <td>{{ team.rank }}</td>
+            <td style="display: flex; align-items: center; gap: 10px;">
+                <img src="{{ team.team.logo }}" alt="{{ team.team.name }} logo" width="25" height="25">
+                {{ team.team.name }}
+            </td>
+            <td>{{ team.all.played }}</td>
+            <td>{{ team.all.win }}</td>
+            <td>{{ team.all.draw }}</td>
+            <td>{{ team.all.lose }}</td>
+            <td>{{ team.all.goals.for }}</td>
+            <td>{{ team.all.goals.against }}</td>
+            <td>{{ team.goalsDiff }}</td>
+            <td>{{ team.points }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    {% endfor %}
+{% endif %}
+</table>
+{% endblock %}

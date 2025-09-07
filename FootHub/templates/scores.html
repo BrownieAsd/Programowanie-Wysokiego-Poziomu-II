@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Live Scores{% endblock %}
+
+{% block head %}
+<style>
+  .match-card {
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .match-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.15);
+  }
+  .team-logo {
+    height: 40px;
+    width: 40px;
+    object-fit: contain;
+  }
+  .score {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  .match-info {
+    font-size: 0.9rem;
+    color: #555;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center fw-bold mb-4">⚽ Live Football Scores</h1>
+
+{% if matches %}
+<div class="row row-cols-1 row-cols-md-2 g-4">
+  {% for match in matches %}
+  <div class="col">
+    <div class="card match-card shadow-sm text-center p-3">
+
+      <div class="d-flex align-items-center justify-content-between">
+
+        <div class="text-start d-flex align-items-center gap-2">
+          <img src="{{ match['teams']['home']['logo'] }}" alt="{{ match['teams']['home']['name'] }} logo" class="team-logo">
+          <span class="fw-semibold">{{ match['teams']['home']['name'] }}</span>
+        </div>
+
+        <div class="score">
+          {{ match['goals']['home'] }} - {{ match['goals']['away'] }}
+        </div>
+
+        <div class="text-end d-flex align-items-center gap-2">
+          <span class="fw-semibold">{{ match['teams']['away']['name'] }}</span>
+          <img src="{{ match['teams']['away']['logo'] }}" alt="{{ match['teams']['away']['name'] }} logo" class="team-logo">
+        </div>
+
+      </div>
+
+      <div class="mt-2 match-info">
+        {{ match['league']['name'] }} |
+        {{ match['fixture']['status']['long'] }} |
+        Kickoff: {{ match['fixture']['date'][:16].replace("T", " ") }}
+      </div>
+
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info text-center">
+  No live matches at the moment.
+</div>
+{% endif %}
+{% endblock %}

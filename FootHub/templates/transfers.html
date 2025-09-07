@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Latest Transfers{% endblock %}
+
+{% block head %}
+<style>
+  .transfer-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 12px;
+  }
+  .transfer-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  .player-img {
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  .club-badge {
+    height: 40px;
+    object-fit: contain;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center mb-4 fw-bold">Latest Transfer News</h1>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+  {% for t in transfers %}
+  <div class="col">
+    <div class="card transfer-card h-100 shadow-sm text-center p-3">
+
+      {% if t.image %}
+        <img src="{{ t.image }}" alt="{{ t.player }}" class="player-img mx-auto">
+      {% else %}
+        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Player" class="player-img mx-auto">
+      {% endif %}
+
+      <h5 class="card-title">{{ t.player }}</h5>
+
+      <div class="d-flex justify-content-center align-items-center my-2">
+        {% if t.from_team_logo %}
+          <img src="{{ t.from_team_logo }}" class="club-badge me-2" alt="{{ t.from_team }}">
+        {% endif %}
+        <span class="fw-bold">{{ t.from_team }}</span>
+        <span class="mx-2">➡️</span>
+        {% if t.to_team_logo %}
+          <img src="{{ t.to_team_logo }}" class="club-badge me-2" alt="{{ t.to_team }}">
+        {% endif %}
+        <span class="fw-bold">{{ t.to_team }}</span>
+      </div>
+
+      <p class="text-muted mb-1"><small>Date: {{ t.date }}</small></p>
+      {% if t.fee %}
+        <p class="fw-semibold text-success">Fee: {{ t.fee }}</p>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+
+</div>
+{% endblock %}
